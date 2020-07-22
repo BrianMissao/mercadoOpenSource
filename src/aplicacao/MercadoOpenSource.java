@@ -5,6 +5,7 @@ import dominio.ItemDoPedido;
 import dominio.Pedido;
 import dominio.Produto;
 import dominio.enums.StatusDoPedido;
+import reposittorio.PedidoRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -28,6 +29,13 @@ public class MercadoOpenSource {
         int numeroDeItensNoPedido = Integer.parseInt(obterDados("Quantos itens deseja pedir?"));
         adicionarItensAoPedido(numeroDeItensNoPedido);
         mostrarPedido();
+        String caminhoDoArquivo = obterDados("Digite o caminho do arquivo onde será gravado o Pedido");
+        gravarPedidoEmArquivo(caminhoDoArquivo);
+    }
+
+    private static void gravarPedidoEmArquivo(String caminhoDoArquivo) {
+        new PedidoRepository(pedido).gravarEmArquivo(caminhoDoArquivo);
+        System.out.println("Arquivo gravado com sucesso: "+caminhoDoArquivo);
     }
 
     private static void mostrarPedido() {

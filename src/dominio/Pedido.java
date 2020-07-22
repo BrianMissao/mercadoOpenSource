@@ -15,7 +15,6 @@ public class Pedido {
     private StatusDoPedido statusDoPedido;
     private Date data = new Date();
     private SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    private BigDecimal total = new BigDecimal("0.00");
     private List<ItemDoPedido> itensDoPedido = new ArrayList<>();
 
     public Pedido(Cliente cliente, StatusDoPedido statusDoPedido) {
@@ -26,8 +25,9 @@ public class Pedido {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Dados do pedido:\n");
-        stringBuilder.append("Data: "+dataFormatada.format(data)+"\n");
+        stringBuilder.append("Data: " + dataFormatada.format(data) + "\n");
         stringBuilder.append(cliente + "\n");
+        BigDecimal total = new BigDecimal("0.00");
         for (ItemDoPedido itemDoPedido : itensDoPedido) {
             stringBuilder.append(itemDoPedido);
             total = total.add(itemDoPedido.getSubTotal().setScale(2, RoundingMode.HALF_EVEN));
@@ -35,9 +35,11 @@ public class Pedido {
         stringBuilder.append("Total do pedido: " + total);
         return stringBuilder.toString();
     }
-public void adicionarItens(ItemDoPedido itemDoPedido) {
+
+    public void adicionarItens(ItemDoPedido itemDoPedido) {
         itensDoPedido.add(itemDoPedido);
-}
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -45,4 +47,5 @@ public void adicionarItens(ItemDoPedido itemDoPedido) {
     public List<ItemDoPedido> getItensDoPedido() {
         return Collections.unmodifiableList(itensDoPedido);
     }
+
 }
